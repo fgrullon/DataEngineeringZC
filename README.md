@@ -1,1 +1,1 @@
-# DE-ZoomCamp
+# Data Engineering Zoomcamp
