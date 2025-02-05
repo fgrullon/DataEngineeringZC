@@ -1,0 +1,54 @@
+Question 1. Version of pip (1 point)
+pip 24.3.1 from /usr/local/lib/python3.12/site-packages/pip (python 3.12)
+
+Question 2. Docker networking and docker-compose (1 point)
+db:5433
+
+Question 3. Trip Segmentation Count (1 point)
+-- 104,802; 198,924; 109,603; 27,678; 35,189
+SELECT 
+	sum(case when trip_distance <= 1 then 1 else 0 end) as one_mile,
+	sum(case when trip_distance > 1  and trip_distance <= 3 then 1 else 0 end) as one_three_mile,
+	sum(case when trip_distance > 3  and trip_distance <= 7 then 1 else 0 end) as three_seven_mile,
+	sum(case when trip_distance > 7  and trip_distance <= 10 then 1 else 0 end) as seven_ten_mile,
+	sum(case when trip_distance > 10 then 1 else 0 end) as over_ten_mile
+FROM public.green_taxi_data_2019 
+where lpep_pickup_datetime >= '2019-10-01'
+and lpep_dropoff_datetime < '2019-11-01';
+
+Question 4. Longest trip (1 point)
+2019-10-11
+
+SELECT 
+lpep_pickup_datetime,
+lpep_dropoff_datetime,
+	trip_distance
+	FROM public.green_taxi_data_2019 
+	where  date(lpep_pickup_datetime) = date(lpep_dropoff_datetime)
+order by trip_distance desc limit 10;
+
+Question 5. Biggest pickup zones (1 point)
+East Harlem North, East Harlem South, Morningside Heights
+SELECT 
+	count(trip_distance) syna,
+	t2."Zone",
+	sum(total_amount) 
+	FROM public.green_taxi_data_2019 t1
+	join public.green_taxi_data_zone t2 on t1."PULocationID" = t2."LocationID"
+	where  date(lpep_pickup_datetime) = '2019-10-18'
+	group by t2."Zone" 
+	having sum(total_amount) >= 13000
+	order by 3 desc;
+
+Question 6. Largest tip (1 point)
+JFK Airport
+SELECT 
+	t2."Zone",
+	tip_amount,
+	t3."Zone"
+	FROM public.green_taxi_data_2019 t1
+	join public.green_taxi_data_zone t2 on t1."PULocationID" = t2."LocationID"
+	join public.green_taxi_data_zone t3 on t1."DOLocationID" = t3."LocationID"
+	where  date(lpep_pickup_datetime) >= '2019-10-01' and date(lpep_dropoff_datetime) <= '2019-10-31'
+	and t2."Zone" = 'East Harlem North'
+	order by tip_amount desc limit 10
