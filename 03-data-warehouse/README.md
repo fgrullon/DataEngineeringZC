@@ -43,7 +43,7 @@ Question 1: What is count of records for the 2024 Yellow Taxi Data?
 - 65,623
 - 840,402
 
-#### - 20,332,093 ✅
+###### - 20,332,093 ✅
 
 - 85,431,289
 
@@ -58,7 +58,7 @@ What is the **estimated amount** of data that will be read when this query is ex
 
 - 18.82 MB for the External Table and 47.60 MB for the Materialized Table
 
-### - 0 MB for the External Table and 155.12 MB for the Materialized Table ✅
+** - 0 MB for the External Table and 155.12 MB for the Materialized Table ✅ **
 
 - 2.14 GB for the External Table and 0MB for the Materialized Table
 - 0 MB for the External Table and 0MB for the Materialized Table
@@ -72,7 +72,7 @@ SELECT COUNT(PULocationID) AS Total_PULocations FROM ny_taxi.yellow_tripdata gro
 
 Write a query to retrieve the PULocationID from the table (not the external table) in BigQuery. Now write a query to retrieve the PULocationID and DOLocationID on the same table. Why are the estimated number of Bytes different?
 
-### - BigQuery is a columnar database, and it only scans the specific columns requested in the query. Querying two columns (PULocationID, DOLocationID) requires reading more data than querying one column (PULocationID), leading to a higher estimated number of bytes processed. ✅
+##### - BigQuery is a columnar database, and it only scans the specific columns requested in the query. Querying two columns (PULocationID, DOLocationID) requires reading more data than querying one column (PULocationID), leading to a higher estimated number of bytes processed. ✅
 
 - BigQuery duplicates data across multiple storage partitions, so selecting two columns instead of one requires scanning the table twice,
   doubling the estimated bytes processed.
